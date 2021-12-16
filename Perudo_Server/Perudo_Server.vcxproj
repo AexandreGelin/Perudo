@@ -139,11 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EndPoint.cpp" />
+    <ClCompile Include="Output.cpp" />
     <ClCompile Include="Perudo_Server.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Semaphore.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EndPoint.h" />
+    <ClInclude Include="Output.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Semaphore.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
