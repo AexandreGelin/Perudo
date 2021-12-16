@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Perudo_Server", "Perudo_Server\Perudo_Server.vcxproj", "{A13BF566-B86B-4C72-9F9A-EF0E6BD82DC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Perudo_UI", "Perudo_UI\Perudo_UI.csproj", "{493D0A06-4015-444E-9B90-91465A7F9463}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Perudo_UI", "Perudo_UI\Perudo_UI.csproj", "{493D0A06-4015-444E-9B90-91465A7F9463}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client_Console", "Client_Console\Client_Console.vcxproj", "{181BBC75-980A-4D93-9602-341F47A0A3E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,16 @@ Global
 		{493D0A06-4015-444E-9B90-91465A7F9463}.Release|x64.Build.0 = Release|Any CPU
 		{493D0A06-4015-444E-9B90-91465A7F9463}.Release|x86.ActiveCfg = Release|Any CPU
 		{493D0A06-4015-444E-9B90-91465A7F9463}.Release|x86.Build.0 = Release|Any CPU
+		{181BBC75-980A-4D93-9602-341F47A0A3E5}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{181BBC75-980A-4D93-9602-341F47A0A3E5}.Debug|x64.ActiveCfg = Debug|x64
+		{181BBC75-980A-4D93-9602-341F47A0A3E5}.Debug|x64.Build.0 = Debug|x64
+		{181BBC75-980A-4D93-9602-341F47A0A3E5}.Debug|x86.ActiveCfg = Debug|Win32
+		{181BBC75-980A-4D93-9602-341F47A0A3E5}.Debug|x86.Build.0 = Debug|Win32
+		{181BBC75-980A-4D93-9602-341F47A0A3E5}.Release|Any CPU.ActiveCfg = Release|Win32
+		{181BBC75-980A-4D93-9602-341F47A0A3E5}.Release|x64.ActiveCfg = Release|x64
+		{181BBC75-980A-4D93-9602-341F47A0A3E5}.Release|x64.Build.0 = Release|x64
+		{181BBC75-980A-4D93-9602-341F47A0A3E5}.Release|x86.ActiveCfg = Release|Win32
+		{181BBC75-980A-4D93-9602-341F47A0A3E5}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

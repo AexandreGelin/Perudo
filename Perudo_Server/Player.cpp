@@ -148,6 +148,8 @@ void Player::execute_thread()
 				strftime(buffer, MAXDATASIZE, "%A", time_info);
 			else if (strcmp(buffer, "MONTH") == 0)
 				strftime(buffer, MAXDATASIZE, "%B", time_info);
+			else if (strcmp(buffer, "READY") == 0)
+				;
 			else
 				sprintf(buffer, "%s is not recognized as a valid command", buffer);
 

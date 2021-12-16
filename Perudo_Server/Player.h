@@ -28,6 +28,7 @@
 		const int MAXDATASIZE;
 		int id;
 		bool is_alive;
+		bool is_ready;
 #ifdef _WIN32
 		SOCKET socket;
 #else
