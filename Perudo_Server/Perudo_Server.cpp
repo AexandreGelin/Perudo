@@ -16,7 +16,7 @@
 // ----------------------------------------------------------------------------------------------------------------
 
 // Nombre maximal de connexions en attente
-#define BACKLOG 10
+#define BACKLOG 6
 
 // Nombre maximal d'octets à envoyer ou à lire en une fois
 #define MAXDATASIZE 100
