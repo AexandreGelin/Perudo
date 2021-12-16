@@ -26,7 +26,7 @@ Player::Player(int id, SOCKET socket, const int MAXDATASIZE) : id(id), socket(so
 	buffer = new char[MAXDATASIZE];
 }
 #else
-Client::Client(int id, int socket, const int MAXDATASIZE) : id(id), socket(socket), MAXDATASIZE(MAXDATASIZE), is_alive(true)
+Player::Player(int id, int socket, const int MAXDATASIZE) : id(id), socket(socket), MAXDATASIZE(MAXDATASIZE), is_alive(true)
 {
 	buffer = new char[MAXDATASIZE];
 }
@@ -44,7 +44,7 @@ bool Player::close_socket()
 		return true;
 
 	int result;
-	Output::GetInstance()->print("[CLIENT_", id, "] Closing client socket...\n");
+	Output::GetInstance()->print("[PLAYER_", id, "] Closing client socket...\n");
 
 #ifdef _WIN32
 	result = closesocket(socket);
@@ -54,14 +54,14 @@ bool Player::close_socket()
 
 	if (result == -1) {
 		char* error = new char[MAXDATASIZE];
-		sprintf(error, "[CLIENT_%d] Error while closing socket ", id);
+		sprintf(error, "[PLAYER_%d] Error while closing socket ", id);
 		Output::GetInstance()->print_error(error);
 		Output::GetInstance()->print("\n");
 		delete[] error;
 		return false;
 	}
 	else {
-		Output::GetInstance()->print("[CLIENT_", id, "] Client socket closed successfully.\n");
+		Output::GetInstance()->print("[PLAYER_", id, "] Player socket closed successfully.\n");
 	}
 
 	return true;
@@ -73,7 +73,7 @@ bool Player::send_message(const char* buffer)
 
 	if (send(socket, buffer, strlen(buffer), 0) == -1) {
 		char* error = new char[MAXDATASIZE];
-		sprintf(error, "[CLIENT_%d] Error while sending message to client ", id);
+		sprintf(error, "[PLAYER_%d] Error while sending message to client ", id);
 		Output::GetInstance()->print_error(error);
 		Output::GetInstance()->print("\n");
 		delete[] error;
@@ -91,7 +91,7 @@ int Player::recv_message()
 	if ((length = recv(socket, buffer, MAXDATASIZE, 0)) == -1)
 	{
 		char* error = new char[MAXDATASIZE];
-		sprintf(error, "[CLIENT_%d] Error while receiving message from client ", id);
+		sprintf(error, "[PLAYER_%d] Error while receiving message from client ", id);
 		Output::GetInstance()->print_error(error);
 		Output::GetInstance()->print("\n");
 		delete[] error;
@@ -114,15 +114,15 @@ void Player::execute_thread()
 	time_t time_value;
 	struct tm* time_info;
 
-	Output::GetInstance()->print("[CLIENT_", id, "] Thread client starts with id=", id, ".\n");
+	Output::GetInstance()->print("[PLAYER_", id, "] Thread client starts with id=", id, ".\n");
 
-	// Boucle infinie pour le client
+	// Boucle infinie pour le player
 	while (1) {
 
 		if (socket == NULL || !is_alive)
 			return;
 
-		// On attend un message du client
+		// On attend un message du player
 		if ((length = recv_message()) == -1) {
 			break;
 		}
@@ -131,7 +131,7 @@ void Player::execute_thread()
 			return;
 
 		// Affichage du message
-		Output::GetInstance()->print("[CLIENT_", id, "] Message received : ", buffer, "\n");
+		Output::GetInstance()->print("[PLAYER_", id, "] Message received : ", buffer, "\n");
 
 		if (strcmp(buffer, "DISCONNECT") == 0) {
 			break;
@@ -155,12 +155,12 @@ void Player::execute_thread()
 				return;
 
 			// On envoie le buffer
-			Output::GetInstance()->print("[CLIENT_", id, "] Sending message \"", buffer, "\" to client...\n");
+			Output::GetInstance()->print("[PLAYER_", id, "] Sending message \"", buffer, "\" to client...\n");
 			if (!send_message(buffer)) {
 				break;
 			}
 
-			Output::GetInstance()->print("[CLIENT_", id, "] Message \"", buffer, "\" send to client successfully.\n");
+			Output::GetInstance()->print("[PLAYER_", id, "] Message \"", buffer, "\" send to client successfully.\n");
 		}
 	}
 
@@ -170,7 +170,7 @@ void Player::execute_thread()
 void Player::start_thread()
 {
 	join_thread();
-	// Start client thread
+	// Start player thread
 	thread = std::thread(&Player::execute_thread, this);
 }
 
@@ -179,9 +179,9 @@ void Player::end_thread()
 	if (!is_alive)
 		return;
 
-	Output::GetInstance()->print("[CLIENT_", id, "] Thread client is ending...\n");
+	Output::GetInstance()->print("[PLAYER_", id, "] Thread client is ending...\n");
 
-	// Sending close connection to client
+	// Sending close connection to player
 	send_message("CONNECTION_CLOSED");
 
 	is_alive = false;
@@ -193,7 +193,7 @@ void Player::end_thread()
 	// Close connection
 	close_socket();
 
-	Output::GetInstance()->print("[CLIENT_", id, "] Thread client ends.\n");
+	Output::GetInstance()->print("[PLAYER_", id, "] Thread client ends.\n");
 }
 
 void Player::join_thread()

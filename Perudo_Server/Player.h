@@ -46,7 +46,7 @@
 #ifdef _WIN32
 		Player(int, SOCKET, const int MAXDATASIZE);
 #else
-		Client(int, int, const int MAXDATASIZE);
+		Player(int, int, const int MAXDATASIZE);
 #endif
 		~Player();
 

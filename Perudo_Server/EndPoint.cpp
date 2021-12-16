@@ -73,12 +73,12 @@ bool EndPoint::open()
 
 SOCKET EndPoint::accept_connection()
 {
-    SOCKET client_socket;
-    SOCKADDR_IN client_address;
-    int sinsize = sizeof(client_address);
+    SOCKET player_socket;
+    SOCKADDR_IN player_address;
+    int sinsize = sizeof(player_address);
 
     // Acceptation de la connexion
-    if ((client_socket = accept(connection_socket, (SOCKADDR*)&client_address, &sinsize)) == -1) {
+    if ((player_socket = accept(connection_socket, (SOCKADDR*)&player_address, &sinsize)) == -1) {
         if (!is_alive)
             return NULL;
         Output::GetInstance()->print_error("[SERVER] Error while accepting client connection ");
@@ -89,9 +89,9 @@ SOCKET EndPoint::accept_connection()
         return NULL;
 
     // Affichage de la connexion
-    Output::GetInstance()->print("[SERVER][+] New connection from ", inet_ntoa(client_address.sin_addr), "\n");
+    Output::GetInstance()->print("[SERVER][+] New connection from ", inet_ntoa(player_address.sin_addr), "\n");
 
-    return client_socket;
+    return player_socket;
 }
 #else
 int EndPoint::open()
@@ -135,12 +135,12 @@ int EndPoint::open()
 
 int accept_connection()
 {
-    int client_socket;
-    struct sockaddr_in client_address;
+    int player_socket;
+    struct sockaddr_in player_address;
     unsigned int sinsize = sizeof(struct sockaddr_in);
 
     // Acceptation de la connexion
-    if ((client_socket = accept(connection_socket, (struct sockaddr*)&client_address, &sinsize)) == -1) {
+    if ((player_socket = accept(connection_socket, (struct sockaddr*)&player_address, &sinsize)) == -1) {
         if (!is_alive)
             return NULL;
         Output::GetInstance()->print_error("[SERVER] Error while accepting client connection ");
@@ -151,9 +151,9 @@ int accept_connection()
         return NULL;
 
     // Affichage de la connexion
-    Output::GetInstance()->print("[SERVER][+] New connection from ", inet_ntoa(client_address.sin_addr), "\n");
+    Output::GetInstance()->print("[SERVER][+] New connection from ", inet_ntoa(player_address.sin_addr), "\n");
 
-    return client_socket;
+    return player_socket;
 }
 #endif
 
@@ -214,15 +214,15 @@ void EndPoint::execute_thread()
 
         threads_count++;
 #ifdef _WIN32
-        SOCKET client_socket = accept_connection();
+        SOCKET player_socket = accept_connection();
 #else
-        int client_socket = accept_connection();
+        int player_socket = accept_connection();
 #endif
         if (!is_alive)
             return;
 
-        if (client_socket != NULL) {
-            p = new Player(threads_count, client_socket, MAXDATASIZE);
+        if (player_socket != NULL) {
+            p = new Player(threads_count, player_socket, MAXDATASIZE);
             if (!is_alive) {
                 p->~Player();
                 return;
