@@ -19,7 +19,7 @@
 #endif
 #include <thread>
 #include <vector>
-#include "Client.h"
+#include "Player.h"
 
 #ifndef ENDPOINT_H
 #define ENDPOINT_H
@@ -38,7 +38,7 @@ private:
 	int connection_socket;
 #endif
 	std::thread thread;
-	std::vector<Client*> clients;
+	std::vector<Player*> players;
 
 	bool open();
 #ifdef _WIN32

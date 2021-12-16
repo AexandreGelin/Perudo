@@ -18,7 +18,7 @@
 #include <arpa/inet.h>
 #endif
 #include "EndPoint.h"
-#include "Client.h"
+#include "Player.h"
 #include "Output.h"
 
 EndPoint::EndPoint(int connection_port, const int BACKLOG, const int MAXDATASIZE, bool init_winsocks) : connection_port(connection_port), BACKLOG(BACKLOG), init_winsocks(init_winsocks), MAXDATASIZE(MAXDATASIZE), connection_socket(NULL), is_alive(true)
@@ -204,7 +204,7 @@ void EndPoint::execute_thread()
 
     // Boucle infinie pour le serveur (pour accepter les connexions entrantes)
     int threads_count = 0;
-    Client* c;
+    Player* p;
     while (1)
     {
         if (!is_alive)
@@ -222,14 +222,14 @@ void EndPoint::execute_thread()
             return;
 
         if (client_socket != NULL) {
-            c = new Client(threads_count, client_socket, MAXDATASIZE);
+            p = new Player(threads_count, client_socket, MAXDATASIZE);
             if (!is_alive) {
-                c->~Client();
+                p->~Player();
                 return;
             }
 
-            c->start_thread();
-            clients.push_back(c);
+            p->start_thread();
+            players.push_back(p);
         }
     }
 }
@@ -250,9 +250,9 @@ void EndPoint::end_thread()
 
     is_alive = false;
 
-    // End all clients
-    for (std::vector<Client*>::iterator it = clients.begin(); it != clients.end(); ++it) {
-        (*it)->~Client();
+    // End all players
+    for (std::vector<Player*>::iterator it = players.begin(); it != players.end(); ++it) {
+        (*it)->~Player();
     }
 
     // End thread

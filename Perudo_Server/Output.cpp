@@ -28,7 +28,7 @@ bool Output::confirm_exit()
 {
     sem_std_out.wait();
     std::cout << std::endl;
-    std::cout << "[MAIN] ATTENTION : Si vous arretez le serveur, tous les clients seront deconnectes !" << std::endl;
+    std::cout << "[MAIN] ATTENTION : Si vous arretez le serveur, tous les joueurs seront deconnectes !" << std::endl;
     std::cout << "[MAIN] Etes-vous sur de vouloir continuer ? [O] Oui  [N] Non" << std::endl;
     char c;
     std::cin >> c;
