@@ -40,6 +40,22 @@ std::vector<Player*> players;
 // Fonctions
 // ----------------------------------------------------------------------------------------------------------------
 
+bool allPlayerReady(std::vector<Player*> players)
+{
+    bool waitAllPlayers = allPlayerReady(players);
+
+    if (waitAllPlayers)
+    {
+        std::cout << "ok";
+    }
+    
+    for (std::vector<Player*>::iterator it = players.begin(); it != players.end(); ++it) {
+        std::cout << (*it)->checkReady();
+    }
+    return false;
+}
+
+
 int main(int argc, char* argv[])
 {
     Output::GetInstance()->print("*********************************************************\n");
@@ -62,7 +78,7 @@ int main(int argc, char* argv[])
     Output::GetInstance()->print("[MAIN] Creating server end point...\n");
     EndPoint connection(port, BACKLOG, MAXDATASIZE, true);
     connection.start_thread();
-
+    
     // Boucle infinie pour ne pas arrêter le programme serveur
     while (1)
     {

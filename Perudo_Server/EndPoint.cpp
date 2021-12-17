@@ -190,7 +190,6 @@ bool EndPoint::close()
     return true;
 }
 
-
 void EndPoint::execute_thread()
 {
     Output::GetInstance()->print("[SERVER] Thread server starts.\n");
@@ -231,6 +230,7 @@ void EndPoint::execute_thread()
             p->start_thread();
             players.push_back(p);
         }
+ 
     }
 }
 
