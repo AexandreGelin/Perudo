@@ -19,6 +19,9 @@
 #include <thread>
 #include "Player.h"
 #include "Output.h"
+#include "EndPoint.h"
+#include <regex>
+#include "Game.h"
 
 #ifdef _WIN32
 Player::Player(int id, SOCKET socket, const int MAXDATASIZE) : id(id), socket(socket), MAXDATASIZE(MAXDATASIZE), is_alive(true)
@@ -113,12 +116,13 @@ void Player::execute_thread()
 	int length;
 	time_t time_value;
 	struct tm* time_info;
+	std::regex pattern{ "\\d(D|d)\\d" };
 
 	Output::GetInstance()->print("[PLAYER_", id, "] Thread client starts with id=", id, ".\n");
 
 	// Boucle infinie pour le player
 	while (1) {
-
+	
 		if (socket == NULL || !is_alive)
 			return;
 
@@ -132,6 +136,7 @@ void Player::execute_thread()
 
 		// Affichage du message
 		Output::GetInstance()->print("[PLAYER_", id, "] Message received : ", buffer, "\n");
+		
 
 		if (strcmp(buffer, "DISCONNECT") == 0) {
 			break;
@@ -141,6 +146,9 @@ void Player::execute_thread()
 			time(&time_value);
 			time_info = localtime(&time_value);
 
+			std::string target{buffer};
+			bool result = std::regex_match(target, pattern);
+
 			// Traitement du message reçu
 			if (strcmp(buffer, "DATE") == 0)
 				strftime(buffer, MAXDATASIZE, "%e/%m/%Y", time_info);
@@ -148,8 +156,13 @@ void Player::execute_thread()
 				strftime(buffer, MAXDATASIZE, "%A", time_info);
 			else if (strcmp(buffer, "MONTH") == 0)
 				strftime(buffer, MAXDATASIZE, "%B", time_info);
-			else if (strcmp(buffer, "READY") == 0)
-				;
+			else if (strcmp(buffer, "READY") == 0){
+				is_ready = true;
+				Game game;
+				game.allPlayerReady();
+			}
+			else if (result)
+				send_message("Mise correcte , en attente du joueur suivant");
 			else
 				sprintf(buffer, "%s is not recognized as a valid command", buffer);
 
@@ -203,4 +216,9 @@ void Player::join_thread()
 	if (thread.joinable()) {
 		thread.join();
 	}
+}
+
+bool Player::checkReady()
+{
+	return is_ready;
 }

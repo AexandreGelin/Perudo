@@ -32,13 +32,13 @@ private:
 	int connection_port;
 	bool is_alive;
 	bool init_winsocks;
+
 #ifdef _WIN32
 	SOCKET connection_socket;
 #else
 	int connection_socket;
 #endif
 	std::thread thread;
-	std::vector<Player*> players;
 
 	bool open();
 #ifdef _WIN32
@@ -50,12 +50,15 @@ private:
 	void execute_thread();
 
 public:
-	EndPoint(int, const int, const int, bool);
+
+	EndPoint(int, const int, const int, bool); 
 	~EndPoint();
 
 	void start_thread();
 	void end_thread();
 	void join_thread();
+
+	std::vector<Player*> players;
 };
 
 #endif
