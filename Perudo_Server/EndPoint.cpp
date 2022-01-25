@@ -235,6 +235,7 @@ void EndPoint::execute_thread()
             game.joueurs = players;
        
         }
+ 
     }
 }
 
