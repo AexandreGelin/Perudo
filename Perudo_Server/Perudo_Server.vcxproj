@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EndPoint.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Output.cpp" />
     <ClCompile Include="Perudo_Server.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -149,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EndPoint.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Output.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Semaphore.h" />

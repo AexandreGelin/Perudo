@@ -54,6 +54,7 @@
 		void start_thread();
 		void end_thread();
 		void join_thread();
+		bool checkReady();
 	};
 
 #endif

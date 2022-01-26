@@ -20,6 +20,7 @@
 #include "EndPoint.h"
 #include "Player.h"
 #include "Output.h"
+#include "Game.h"
 
 EndPoint::EndPoint(int connection_port, const int BACKLOG, const int MAXDATASIZE, bool init_winsocks) : connection_port(connection_port), BACKLOG(BACKLOG), init_winsocks(init_winsocks), MAXDATASIZE(MAXDATASIZE), connection_socket(NULL), is_alive(true)
 {
@@ -29,7 +30,6 @@ EndPoint::~EndPoint()
 {
     end_thread();
 }
-
 
 #ifdef _WIN32
 bool EndPoint::open()
@@ -190,7 +190,6 @@ bool EndPoint::close()
     return true;
 }
 
-
 void EndPoint::execute_thread()
 {
     Output::GetInstance()->print("[SERVER] Thread server starts.\n");
@@ -229,8 +228,14 @@ void EndPoint::execute_thread()
             }
 
             p->start_thread();
+
             players.push_back(p);
+
+            Game game;
+            game.joueurs = players;
+       
         }
+ 
     }
 }
 
@@ -271,4 +276,5 @@ void EndPoint::join_thread()
         thread.join();
     }
 }
+
 #include "EndPoint.h"

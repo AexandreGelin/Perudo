@@ -35,10 +35,24 @@ bool strtoi(char*, int*);
 // Liste des threads en cours d'exécution
 std::vector<Player*> players;
 
-
-
 // Fonctions
 // ----------------------------------------------------------------------------------------------------------------
+
+bool allPlayerReady(std::vector<Player*> players)
+{
+    bool waitAllPlayers = allPlayerReady(players);
+
+    if (waitAllPlayers)
+    {
+        std::cout << "ok";
+    }
+    
+    for (std::vector<Player*>::iterator it = players.begin(); it != players.end(); ++it) {
+        std::cout << (*it)->checkReady();
+    }
+    return false;
+}
+
 
 int main(int argc, char* argv[])
 {
@@ -62,7 +76,7 @@ int main(int argc, char* argv[])
     Output::GetInstance()->print("[MAIN] Creating server end point...\n");
     EndPoint connection(port, BACKLOG, MAXDATASIZE, true);
     connection.start_thread();
-
+    
     // Boucle infinie pour ne pas arrêter le programme serveur
     while (1)
     {
@@ -70,6 +84,7 @@ int main(int argc, char* argv[])
         std::cin >> buffer;
 
         // Traitement de la commande reçue
+        
         if (strcmp(buffer, "EXIT") == 0 && Output::GetInstance()->confirm_exit()) {
             // On quitte la boucle principale
             break;
