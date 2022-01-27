@@ -122,17 +122,21 @@ void Player::execute_thread()
 
 	// Boucle infinie pour le player
 	while (1) {
-	
-		if (socket == NULL || !is_alive)
+
+		if (socket == NULL || !is_alive) {
+			send_message("[SERVER] : Tu peux plus jouer la frérot");
 			return;
+		}
 
 		// On attend un message du player
 		if ((length = recv_message()) == -1) {
 			break;
 		}
 
-		if (socket == NULL || !is_alive)
+		if (socket == NULL || !is_alive) {
+			send_message("[SERVER] : Tu peux plus jouer la frérot");
 			return;
+		}
 
 		// Affichage du message
 		Output::GetInstance()->print("[PLAYER_", id, "] Message received : ", buffer, "\n");
@@ -166,8 +170,9 @@ void Player::execute_thread()
 			else
 				sprintf(buffer, "%s is not recognized as a valid command", buffer);
 
-			if (socket == NULL || !is_alive)
+			if (socket == NULL || !is_alive) {
 				return;
+			}
 
 			// On envoie le buffer
 			Output::GetInstance()->print("[PLAYER_", id, "] Sending message \"", buffer, "\" to client...\n");
