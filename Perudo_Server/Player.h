@@ -27,7 +27,6 @@
 	private:
 		const int MAXDATASIZE;
 		int id;
-		bool is_alive;
 		bool is_ready;
 		int nbDice;
 

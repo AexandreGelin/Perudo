@@ -65,37 +65,45 @@ void Game::AddPlayers(Player* p)
     Output::GetInstance()->print("jsuis la \n", joueurs.at(0)->getSocketPlayer(), "\n");
 }
 
-//std::vector<int> Game::GetAllPlayerId()
-//{
-//    for (std::vector<Player*>::iterator it = joueurs.begin(); it != joueurs.end(); ++it)
-//    {
-//        allPlayersId.push_back((*it)->getIdPlayer());
-//    }
-//
-//    return allPlayersId;
-//}
-//
-//std::vector<SOCKET> Game::getAllSocket()
-//{
-//    for (std::vector<Player*>::iterator it = joueurs.begin(); it != joueurs.end(); ++it)
-//    {
-//        allPlayersSocket.push_back((*it)->getSocketPlayer());
-//    }
-//
-//    return allPlayersSocket;
-//}
-//
-//bool Game::send_message()
-//{
-//   
-//    if (send(allPlayersSocket.at(0), "test", strlen("test"), 0) == -1) {
-//        char* error = new char[100];
-//        #pragma warning(suppress : 4996) sprintf(error, "[PLAYER_%d] Error while sending message to client ", allPlayersId.at(0));
-//        Output::GetInstance()->print_error(error);
-//        Output::GetInstance()->print("\n");
-//        delete[] error;
-//        return false;
-//    }
-//
-//    return true;
-//}
+/*std::vector<int> Game::GetAllPlayerId()
+{
+    for (std::vector<Player*>::iterator it = joueurs.begin(); it != joueurs.end(); ++it)
+    {
+        allPlayersId.push_back((*it)->getIdPlayer());
+    }
+
+    return allPlayersId;
+}
+
+std::vector<SOCKET> Game::getAllSocket()
+{
+    for (std::vector<Player*>::iterator it = joueurs.begin(); it != joueurs.end(); ++it)
+    {
+        allPlayersSocket.push_back((*it)->getSocketPlayer());
+    }
+
+    return allPlayersSocket;
+
+}
+
+bool Game::send_message()
+{
+    for (int i = 0; i < joueurs.size(); i++)
+    {
+        Output::GetInstance()->print("\n");
+        Output::GetInstance()->print(allPlayersSocket.size());
+        Output::GetInstance()->print("\n");
+        if (send(allPlayersSocket.at(i), "test", strlen("test"), 0) == -1) 
+        {
+            char* error = new char[100];
+#pragma warning(suppress : 4996) sprintf(error, "[PLAYER_%d] Error while sending message to client ", allPlayersId.at(i));
+            Output::GetInstance()->print_error(error);
+            Output::GetInstance()->print("\n");
+            delete[] error;
+            return false;
+        }
+    
+    }
+    return true;
+}
+*/

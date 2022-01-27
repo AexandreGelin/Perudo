@@ -24,7 +24,7 @@
 #include "Game.h"
 
 #ifdef _WIN32
-Player::Player(int id, SOCKET socket, const int MAXDATASIZE) : id(id), socket(socket), MAXDATASIZE(MAXDATASIZE), is_alive(true)
+Player::Player(int id, SOCKET socket, const int MAXDATASIZE) : id(id), socket(socket), MAXDATASIZE(MAXDATASIZE)
 {
 	buffer = new char[MAXDATASIZE];
 }
@@ -43,7 +43,7 @@ Player::~Player()
 
 bool Player::close_socket()
 {
-	if (socket == NULL || !is_alive)
+	if (socket == NULL)
 		return true;
 
 	int result;
@@ -71,7 +71,7 @@ bool Player::close_socket()
 }
 bool Player::send_message(const char* buffer)
 {
-	if (socket == NULL || !is_alive)
+	if (socket == NULL)
 		return false;
 
 	if (send(socket, buffer, strlen(buffer), 0) == -1) {
@@ -88,7 +88,7 @@ bool Player::send_message(const char* buffer)
 
 int Player::recv_message()
 {
-	if (socket == NULL || !is_alive)
+	if (socket == NULL)
 		return -1;
 
 	int length;
@@ -124,61 +124,41 @@ void Player::execute_thread()
 	// Boucle infinie pour le player
 	while (1) {
 
-		if (socket == NULL || !is_alive) {
-			send_message("[SERVER] : Tu peux plus jouer la frérot");
-			return;
-		}
-
 		// On attend un message du player
 		if ((length = recv_message()) == -1) {
 			break;
 		}
 
-		if (socket == NULL || !is_alive) {
-			send_message("[SERVER] : Tu peux plus jouer la frérot");
-			return;
-		}
-
 		// Affichage du message
 		Output::GetInstance()->print("[PLAYER_", id, "] Message received : ", buffer, "\n");
 		
-
 		if (strcmp(buffer, "DISCONNECT") == 0) {
 			break;
 		}
-		else {
-			// On recupere l'heure et la date
-			time(&time_value);
-			time_info = localtime(&time_value);
 
+		else 
+		{
 			std::string target{buffer};
 			bool result = std::regex_match(target, pattern);
 
 			// Traitement du message reçu
-			if (strcmp(buffer, "DATE") == 0)
-				strftime(buffer, MAXDATASIZE, "%e/%m/%Y", time_info);
-			else if (strcmp(buffer, "DAY") == 0)
-				strftime(buffer, MAXDATASIZE, "%A", time_info);
-			else if (strcmp(buffer, "MONTH") == 0)
-				strftime(buffer, MAXDATASIZE, "%B", time_info);
-			else if (strcmp(buffer, "READY") == 0){
+			
+			if (strcmp(buffer, "READY") == 0){
 				is_ready = true;
 				Game game;
 				bool test = game.GetInstance()->allPlayerReady();
 				Output::GetInstance()->print(test);
+				
 				if (test)
 				{
-					/*std::vector<int> allPlayerId = game.GetInstance()->GetAllPlayerId();
-					std::vector<SOCKET> allSocketPlayer = game.GetInstance()->getAllSocket();
-					game.GetInstance()->send_message();*/
+
 				}
 			}
-			else if (result)
-				send_message("Mise correcte , en attente du joueur suivant");
-			else
-				sprintf(buffer, "%s is not recognized as a valid command", buffer);
-
-			if (socket == NULL || !is_alive) {
+			else if (result) send_message("Mise correcte , en attente du joueur suivant");
+			
+			else sprintf(buffer, "%s is not recognized as a valid command", buffer);
+				
+			if (socket == NULL) {
 				return;
 			}
 
@@ -204,15 +184,11 @@ void Player::start_thread()
 
 void Player::end_thread()
 {
-	if (!is_alive)
-		return;
 
 	Output::GetInstance()->print("[PLAYER_", id, "] Thread client is ending...\n");
 
 	// Sending close connection to player
 	send_message("CONNECTION_CLOSED");
-
-	is_alive = false;
 
 	// End thread
 	thread.detach();
