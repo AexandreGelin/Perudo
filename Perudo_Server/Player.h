@@ -40,6 +40,7 @@
 		char* buffer;
 
 		bool send_message(const char*);
+		//bool send_messageToAllPlayers(std::vector<SOCKET> allPlayerSocket);
 		int recv_message();
 		bool close_socket();
 		void execute_thread();
@@ -57,9 +58,10 @@
 		void start_thread();
 		void end_thread();
 		void join_thread();
+		
 		bool checkReady();
-
 		int getIdPlayer();
+		SOCKET getSocketPlayer();
 
 	};
 

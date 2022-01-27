@@ -16,13 +16,16 @@ public:
 
 	std::vector<Player*> joueurs;
 
-	bool allPlayerReady();
+	std::vector<SOCKET> allPlayersSocket;
 
-	void AddPlayers(Player* p);
-
-	std::vector<int> StartGame(std::vector<int> allPlayersId);
+	std::vector<int> allPlayersId;
 
 	static Game* GetInstance();
+	void AddPlayers(Player* p);
+	bool allPlayerReady();
+	std::vector<int> GetAllPlayerId();
+	std::vector<SOCKET> getAllSocket(); 
+	bool send_message();
 
 };
 

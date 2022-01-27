@@ -85,6 +85,7 @@ bool Player::send_message(const char* buffer)
 
 	return true;
 }
+
 int Player::recv_message()
 {
 	if (socket == NULL || !is_alive)
@@ -167,7 +168,9 @@ void Player::execute_thread()
 				Output::GetInstance()->print(test);
 				if (test)
 				{
-					send_message("tout le monde est prêt");
+					std::vector<int> allPlayerId = game.GetInstance()->GetAllPlayerId();
+					std::vector<SOCKET> allSocketPlayer = game.GetInstance()->getAllSocket();
+					game.GetInstance()->send_message();
 				}
 			}
 			else if (result)
@@ -236,4 +239,9 @@ bool Player::checkReady()
 int Player::getIdPlayer()
 {
 	return id;
+}
+
+SOCKET Player::getSocketPlayer()
+{
+	return socket;
 }

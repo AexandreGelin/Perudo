@@ -56,7 +56,7 @@ void Game::AddPlayers(Player* p)
     joueurs.push_back(p);
 }
 
-std::vector<int> Game::StartGame(std::vector<int> allPlayersId)
+std::vector<int> Game::GetAllPlayerId()
 {
     for (std::vector<Player*>::iterator it = joueurs.begin(); it != joueurs.end(); ++it)
     {
@@ -64,4 +64,29 @@ std::vector<int> Game::StartGame(std::vector<int> allPlayersId)
     }
 
     return allPlayersId;
+}
+
+std::vector<SOCKET> Game::getAllSocket()
+{
+    for (std::vector<Player*>::iterator it = joueurs.begin(); it != joueurs.end(); ++it)
+    {
+        allPlayersSocket.push_back((*it)->getSocketPlayer());
+    }
+
+    return allPlayersSocket;
+}
+
+bool Game::send_message()
+{
+   
+    if (send(allPlayersSocket.at(0), "test", strlen("test"), 0) == -1) {
+        char* error = new char[100];
+        #pragma warning(suppress : 4996) sprintf(error, "[PLAYER_%d] Error while sending message to client ", allPlayersId.at(0));
+        Output::GetInstance()->print_error(error);
+        Output::GetInstance()->print("\n");
+        delete[] error;
+        return false;
+    }
+
+    return true;
 }
