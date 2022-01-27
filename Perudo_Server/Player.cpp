@@ -159,7 +159,7 @@ void Player::execute_thread()
 			else if (strcmp(buffer, "READY") == 0){
 				is_ready = true;
 				Game game;
-				game.allPlayerReady();
+				game.GetInstance()->allPlayerReady();
 			}
 			else if (result)
 				send_message("Mise correcte , en attente du joueur suivant");

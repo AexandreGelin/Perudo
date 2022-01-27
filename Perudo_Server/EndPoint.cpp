@@ -20,7 +20,7 @@
 #include "EndPoint.h"
 #include "Player.h"
 #include "Output.h"
-#include "Game.h"
+
 
 EndPoint::EndPoint(int connection_port, const int BACKLOG, const int MAXDATASIZE, bool init_winsocks) : connection_port(connection_port), BACKLOG(BACKLOG), init_winsocks(init_winsocks), MAXDATASIZE(MAXDATASIZE), connection_socket(NULL), is_alive(true)
 {
@@ -221,6 +221,7 @@ void EndPoint::execute_thread()
             return;
 
         if (player_socket != NULL) {
+            
             p = new Player(threads_count, player_socket, MAXDATASIZE);
             if (!is_alive) {
                 p->~Player();
@@ -232,10 +233,9 @@ void EndPoint::execute_thread()
             players.push_back(p);
 
             Game game;
-            game.joueurs = players;
-       
+            game.GetInstance()->AddPlayers(players);
+            
         }
- 
     }
 }
 
@@ -276,5 +276,6 @@ void EndPoint::join_thread()
         thread.join();
     }
 }
+
 
 #include "EndPoint.h"

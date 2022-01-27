@@ -1,10 +1,13 @@
 #pragma once
 #include <vector>
 #include "Player.h"
+
 class Game
 {
 
 private:
+
+	static Game* singleton_;
 
 public:
 
@@ -14,5 +17,10 @@ public:
 	std::vector<Player*> joueurs;
 
 	bool allPlayerReady();
+
+	void AddPlayers(std::vector<Player*> players);
+
+	static Game* GetInstance();
+
 };
 

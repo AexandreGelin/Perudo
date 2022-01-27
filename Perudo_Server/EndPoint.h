@@ -20,6 +20,7 @@
 #include <thread>
 #include <vector>
 #include "Player.h"
+#include "Game.h"
 
 #ifndef ENDPOINT_H
 #define ENDPOINT_H
@@ -59,6 +60,7 @@ public:
 	void join_thread();
 
 	std::vector<Player*> players;
+	
 };
 
 #endif

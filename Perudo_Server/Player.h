@@ -44,6 +44,7 @@
 
 
 	public:
+
 #ifdef _WIN32
 		Player(int, SOCKET, const int MAXDATASIZE);
 #else
@@ -55,6 +56,7 @@
 		void end_thread();
 		void join_thread();
 		bool checkReady();
+
 	};
 
 #endif
