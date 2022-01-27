@@ -168,9 +168,9 @@ void Player::execute_thread()
 				Output::GetInstance()->print(test);
 				if (test)
 				{
-					std::vector<int> allPlayerId = game.GetInstance()->GetAllPlayerId();
+					/*std::vector<int> allPlayerId = game.GetInstance()->GetAllPlayerId();
 					std::vector<SOCKET> allSocketPlayer = game.GetInstance()->getAllSocket();
-					game.GetInstance()->send_message();
+					game.GetInstance()->send_message();*/
 				}
 			}
 			else if (result)

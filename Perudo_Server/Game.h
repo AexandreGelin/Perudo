@@ -23,9 +23,9 @@ public:
 	static Game* GetInstance();
 	void AddPlayers(Player* p);
 	bool allPlayerReady();
-	std::vector<int> GetAllPlayerId();
-	std::vector<SOCKET> getAllSocket(); 
-	bool send_message();
+	//std::vector<int> GetAllPlayerId();
+	//std::vector<SOCKET> getAllSocket(); 
+	//bool send_message();
 
 };
 
