@@ -2,6 +2,7 @@
 #include "EndPoint.h"
 #include <iostream>
 #include "Output.h"
+#include "semaphore.h"
 
 Game* Game::singleton_ = nullptr;
 
@@ -42,7 +43,7 @@ bool Game::allPlayerReady()
 
     if (joueurs.size() == nbPlayerReady)
     {
-        for (std::vector<Player*>::iterator it = joueurs.begin(); it != joueurs.end(); ++it)
+        for (std::vector<Player*>::iterator it = joueurs.begin(); it != joueurs.end(); ++it) 
         {
             Output::GetInstance()->print("ENVOIS du message all ready \n");
             SOCKET socket = (*it)->getSocketPlayer();
@@ -62,6 +63,7 @@ bool Game::allPlayerReady()
 void Game::AddPlayers(Player* p)
 {
     joueurs.push_back(p);
+    Output::GetInstance()->print("jsuis la \n", joueurs.at(0)->getSocketPlayer(), "\n");
 }
 
 /*std::vector<int> Game::GetAllPlayerId()
@@ -106,3 +108,28 @@ bool Game::send_message()
     return true;
 }
 */
+
+void Game::startGame() {
+    
+    CSemaphore *sem_A;
+    sems.push_back(sem_A);
+    /*CSemaphore sem_B(0);
+    sems.push_back(sem_B);
+    CSemaphore sem_C(0);
+    sems.push_back(sem_C);
+    CSemaphore sem_D(0);
+    sems.push_back(sem_D);
+    CSemaphore sem_E(0);
+    sems.push_back(sem_E);
+    CSemaphore sem_F(0);
+    sems.push_back(sem_F);*/
+
+    /*for (std::vector<Player*>::iterator it = joueurs.begin(); it != joueurs.end(); ++it)
+    {
+        currentPlayer = (*it)->getIdPlayer();
+        sems.at(currentPlayer).wait();
+        (*it)->playerChoice();
+        sems.at(currentPlayer+1).notify();
+    }
+    */
+}
