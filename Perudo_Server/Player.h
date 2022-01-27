@@ -29,6 +29,8 @@
 		int id;
 		bool is_alive;
 		bool is_ready;
+		int nbDice;
+
 #ifdef _WIN32
 		SOCKET socket;
 #else
@@ -56,6 +58,8 @@
 		void end_thread();
 		void join_thread();
 		bool checkReady();
+
+		int getIdPlayer();
 
 	};
 

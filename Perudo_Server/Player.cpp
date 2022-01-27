@@ -163,7 +163,12 @@ void Player::execute_thread()
 			else if (strcmp(buffer, "READY") == 0){
 				is_ready = true;
 				Game game;
-				game.GetInstance()->allPlayerReady();
+				bool test = game.GetInstance()->allPlayerReady();
+				Output::GetInstance()->print(test);
+				if (test)
+				{
+					send_message("tout le monde est prêt");
+				}
 			}
 			else if (result)
 				send_message("Mise correcte , en attente du joueur suivant");
@@ -226,4 +231,9 @@ void Player::join_thread()
 bool Player::checkReady()
 {
 	return is_ready;
+}
+
+int Player::getIdPlayer()
+{
+	return id;
 }

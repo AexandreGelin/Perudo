@@ -18,7 +18,9 @@ public:
 
 	bool allPlayerReady();
 
-	void AddPlayers(std::vector<Player*> players);
+	void AddPlayers(Player* p);
+
+	std::vector<int> StartGame(std::vector<int> allPlayersId);
 
 	static Game* GetInstance();
 

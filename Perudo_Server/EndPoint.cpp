@@ -233,7 +233,7 @@ void EndPoint::execute_thread()
             players.push_back(p);
 
             Game game;
-            game.GetInstance()->AddPlayers(players);
+            game.GetInstance()->AddPlayers(p);
             
         }
     }

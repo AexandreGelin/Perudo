@@ -26,25 +26,42 @@ Game::~Game()
 
 bool Game::allPlayerReady()
 { 
-    Output::GetInstance()->print("\n Nombre de joueurs dans allPlayerReady : \n");
+    /*Output::GetInstance()->print("\n Nombre de joueurs dans allPlayerReady : \n");
     Output::GetInstance()->print(joueurs.size());
-    Output::GetInstance()->print("\n");
+    Output::GetInstance()->print("\n");*/
+    int nbPlayerReady = 0;
 
-    for (std::vector<Player*>::iterator it = joueurs.begin(); it != joueurs.end(); ++it) {
-        Output::GetInstance()->print((*it)->checkReady());
+    for (std::vector<Player*>::iterator it = joueurs.begin(); it != joueurs.end(); ++it) 
+    {
+        //Output::GetInstance()->print((*it)->checkReady());
+        if ((*it)->checkReady() == 1)
+        {
+            nbPlayerReady++;
+        }  
     }
 
-    return false;
+    if (joueurs.size() == nbPlayerReady)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+    
 }
 
-void Game::AddPlayers(std::vector<Player*> players)
+void Game::AddPlayers(Player* p)
 {
-    //joueurs.push_back(p);
-    //Output::GetInstance()->print("Nombre de joueurs après add : ");
-    //Output::GetInstance()->print(joueurs.size());
+    joueurs.push_back(p);
+}
 
-    //Output::GetInstance()->print(players.size());
-    joueurs = players;
+std::vector<int> Game::StartGame(std::vector<int> allPlayersId)
+{
+    for (std::vector<Player*>::iterator it = joueurs.begin(); it != joueurs.end(); ++it)
+    {
+        allPlayersId.push_back((*it)->getIdPlayer());
+    }
 
-    //Output::GetInstance()->print(joueurs.size());
+    return allPlayersId;
 }
