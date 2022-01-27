@@ -114,6 +114,8 @@ int main(int argc, char* argv[])
         else {
             // Affichage du message
             cout << buffer << endl;
+            
+            
         }
 
     }
