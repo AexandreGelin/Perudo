@@ -7,6 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <!--<Grid.Background>
+            <ImageBrush ImageSource="D:/Users/Hugo/Downloads/perduo.png" Stretch="UniformToFill"/>
+        </Grid.Background>-->
+        <Button Content="Play" HorizontalAlignment="Center" Height="50" Margin="0,129,0,0" VerticalAlignment="Top" Width="240" Click="Button_Play_Click"/>
+        <Button Content="Quit" HorizontalAlignment="Center" Height="50" Margin="0,252,0,0" VerticalAlignment="Top" Width="240" Click="Button_Quit_Click"/>
+        
 
     </Grid>
 </Window>

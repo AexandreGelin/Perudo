@@ -13,16 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Perudo_UI
+namespace Perudo_UI.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for WaitingPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class WaitingPage : Page
     {
-        public MainWindow()
+        public WaitingPage()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+           
         }
     }
 }
