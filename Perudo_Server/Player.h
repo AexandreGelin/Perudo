@@ -22,48 +22,49 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-	class Player
-	{
-	private:
-		const int MAXDATASIZE;
-		int id;
-		bool is_ready;
-		int nbDice;
+class Player
+{
+private:
+	const int MAXDATASIZE;
+	int id;
+	bool is_ready;
+	int nbDice;
 
 #ifdef _WIN32
-		SOCKET socket;
+	SOCKET socket;
 #else
-		int socket;
+	int socket;
 #endif
-		std::thread thread;
-		char* buffer;
+	std::thread thread;
+	char* buffer;
 
-		bool send_message(const char*);
-		//bool send_messageToAllPlayers(std::vector<SOCKET> allPlayerSocket);
-		int recv_message();
-		bool close_socket();
-		void execute_thread();
+	bool send_message(const char*);
+	//bool send_messageToAllPlayers(std::vector<SOCKET> allPlayerSocket);
+	int recv_message();
+	bool close_socket();
+	void execute_thread();
 
 
-	public:
+public:
 
 #ifdef _WIN32
-		Player(int, SOCKET, const int MAXDATASIZE);
+	Player(int, SOCKET, const int MAXDATASIZE);
 #else
-		Player(int, int, const int MAXDATASIZE);
+	Player(int, int, const int MAXDATASIZE);
 #endif
-		~Player();
+	~Player();
 
-		void start_thread();
-		void end_thread();
-		void join_thread();
-		
-		bool checkReady();
-		int getIdPlayer();
-		SOCKET getSocketPlayer();
-		void playerChoice();
+	void start_thread();
+	void end_thread();
+	void join_thread();
 
-	};
+	bool checkReady();
+	int getIdPlayer();
+	SOCKET getSocketPlayer();
+
+	void giveDice(int nbdice);
+
+};
 
 #endif
 

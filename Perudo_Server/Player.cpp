@@ -118,6 +118,8 @@ void Player::execute_thread()
 	time_t time_value;
 	struct tm* time_info;
 	std::regex pattern{ "\\d(D|d)\\d" };
+	std::regex getNbDice{ "^\\d" };
+	std::regex getDice{ "\\d$" };
 
 	Output::GetInstance()->print("[PLAYER_", id, "] Thread client starts with id=", id, ".\n");
 
@@ -131,33 +133,56 @@ void Player::execute_thread()
 
 		// Affichage du message
 		Output::GetInstance()->print("[PLAYER_", id, "] Message received : ", buffer, "\n");
-		
+
 		if (strcmp(buffer, "DISCONNECT") == 0) {
 			break;
 		}
 
-		else 
+		else
 		{
-			std::string target{buffer};
+			std::string target{ buffer };
 			bool result = std::regex_match(target, pattern);
-
+			Game game;
 			// Traitement du message reçu
-			
-			if (strcmp(buffer, "READY") == 0){
+
+			if (strcmp(buffer, "READY") == 0) {
 				is_ready = true;
-				Game game;
+
 				bool test = game.GetInstance()->allPlayerReady();
 				Output::GetInstance()->print(test);
-				
+
 				if (test)
 				{
-
+					game.StartGame();
 				}
 			}
-			else if (result) send_message("Mise correcte , en attente du joueur suivant");
-			
+			else if (result)
+			{
+				std::string str = buffer;
+				std::smatch m;
+				std::smatch m2;
+				std::regex_search(str, m, getNbDice);
+				std::regex_search(str, m2, getDice);
+
+				int nbDice = 0;
+				int Dice = 0;
+
+				for (auto v : m)
+				{
+					nbDice = stoi(v);
+				}
+
+				for (auto v : m2)
+				{
+					Dice = stoi(v);
+				}
+
+				game.GetInstance()->GetMise(nbDice, Dice, id);
+				send_message("Mise correcte , en attente du joueur suivant");
+			}
+
 			else sprintf(buffer, "%s is not recognized as a valid command", buffer);
-				
+
 			if (socket == NULL) {
 				return;
 			}
@@ -220,4 +245,9 @@ int Player::getIdPlayer()
 SOCKET Player::getSocketPlayer()
 {
 	return socket;
+}
+
+void Player::giveDice(int nbdice)
+{
+	nbDice = nbdice;
 }
