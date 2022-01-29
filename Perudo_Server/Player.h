@@ -61,6 +61,7 @@
 		bool checkReady();
 		int getIdPlayer();
 		SOCKET getSocketPlayer();
+		void playerChoice();
 
 	};
 

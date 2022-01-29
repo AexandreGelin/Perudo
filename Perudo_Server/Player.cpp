@@ -138,9 +138,6 @@ void Player::execute_thread()
 
 		else 
 		{
-			std::string target{buffer};
-			bool result = std::regex_match(target, pattern);
-
 			// Traitement du message reçu
 			
 			if (strcmp(buffer, "READY") == 0){
@@ -151,10 +148,9 @@ void Player::execute_thread()
 				
 				if (test)
 				{
-
+					game.startGame();
 				}
 			}
-			else if (result) send_message("Mise correcte , en attente du joueur suivant");
 			
 			else sprintf(buffer, "%s is not recognized as a valid command", buffer);
 				
@@ -220,4 +216,50 @@ int Player::getIdPlayer()
 SOCKET Player::getSocketPlayer()
 {
 	return socket;
+}
+
+void Player::playerChoice()
+{
+	int length;
+	std::regex pattern{ "\\d(D|d)\\d" };
+
+	Output::GetInstance()->print("[PLAYER_", id, "] Player ", id, " is choising what to do.\n");
+
+	// Boucle infinie pour le player
+	while (1) {
+
+		// On attend un message du player
+		if ((length = recv_message()) == -1) {
+			break;
+		}
+
+		// Affichage du message
+		Output::GetInstance()->print("[PLAYER_", id, "] Message received : ", buffer, "\n");
+
+		if (strcmp(buffer, "DISCONNECT") == 0) {
+			break;
+		}
+
+		else
+		{
+			std::string target{ buffer };
+			bool result = std::regex_match(target, pattern);
+
+			// Traitement du message reçu
+
+			if (strcmp(buffer, "THROW") == 0) {
+				send_message("les dés sont lancé");
+
+			}
+			else if (result) send_message("Mise correcte , en attente du joueur suivant");
+
+			else sprintf(buffer, "%s is not recognized as a valid command", buffer);
+
+			if (socket == NULL) {
+				return;
+			}
+		}
+	}
+
+	end_thread();
 }
