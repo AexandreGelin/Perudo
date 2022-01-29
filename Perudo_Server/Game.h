@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include "Player.h"
-#include "Semaphore.h"
 
 class Game
 {
@@ -9,6 +8,10 @@ class Game
 private:
 
 	static Game* singleton_;
+
+	int nbDiceMisee;
+	int typeDyceMisee;
+	int idJoueurEnCours;
 
 public:
 
@@ -21,17 +24,17 @@ public:
 
 	std::vector<int> allPlayersId;
 
-	std::vector<CSemaphore*> sems;
-
-	int currentPlayer;
-
 	static Game* GetInstance();
 	void AddPlayers(Player* p);
 	bool allPlayerReady();
+
+	void StartGame();
+
+	void GetMise(int dice, int type, int idJoueur);
+
 	//std::vector<int> GetAllPlayerId();
 	//std::vector<SOCKET> getAllSocket(); 
 	//bool send_message();
-	void startGame();
 
 };
 
