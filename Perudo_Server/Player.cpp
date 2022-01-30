@@ -15,6 +15,7 @@
 #include <time.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <sstream>
 #endif
 #include <thread>
 #include "Player.h"
@@ -162,6 +163,17 @@ void Player::execute_thread()
 
 				else send_message("Tu est deja pret");
 			}
+			else if (strcmp(buffer, "THROW") == 0)
+			{
+				std::vector<int> resultDice;
+				for (int i = 0; i < nbDice; i++)
+				{
+					int iRand = (rand() % 9) + 1;
+					resultDice.push_back(iRand);
+				}
+				Output::GetInstance()->print(resultDice.data());
+
+			}
 			
 			else if (result)
 			{
@@ -267,3 +279,4 @@ void Player::giveDice(int nbdice)
 {
 	nbDice = nbdice;
 }
+

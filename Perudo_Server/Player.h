@@ -37,6 +37,7 @@ private:
 #endif
 	std::thread thread;
 	char* buffer;
+	char* playerDice;
 	bool playersAllReady = false;
 
 	bool send_message(const char*);
