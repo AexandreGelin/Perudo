@@ -21,7 +21,7 @@ public:
 
 	std::vector<int> allPlayersId;
 
-	std::vector<CSemaphore> sems;
+	std::vector<CSemaphore*> sems;
 	int currentPlayer;
 
 	static Game* GetInstance();
