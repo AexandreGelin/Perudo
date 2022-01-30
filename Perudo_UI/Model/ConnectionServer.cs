@@ -24,9 +24,10 @@ namespace Perudo_UI.Model
             {
                 IPAddress ip = IPAddress.Parse(IpAdress);
                 await TcpClient.ConnectAsync(ip, Port);
-                if (true)
+                if (TcpClient.Connected)
                 {
-
+                    NetworkStream stream = TcpClient.GetStream();
+                    socket = TcpClient.Client;
                 }
             }
             catch (Exception ex)

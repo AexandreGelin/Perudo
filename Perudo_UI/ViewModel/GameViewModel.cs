@@ -9,6 +9,10 @@ namespace Perudo_UI.ViewModel
 {
     public class GameViewModel
     {
-        public ConnectionServer Server { get; set; }
+        public ConnectionServer ConnectionServer { get; set; }
+        public GameViewModel(ConnectionServer connectionServer)
+        {
+            ConnectionServer = connectionServer;
+        }
     }
 }
