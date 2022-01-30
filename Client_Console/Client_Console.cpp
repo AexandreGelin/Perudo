@@ -19,6 +19,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #endif
+#include <regex>
 
 using namespace std;
 
@@ -46,6 +47,10 @@ bool close_connection(int);
 #endif
 
 bool strtoi(char*, int*);
+
+bool ifReady = false;
+std::smatch m;
+std::regex getReady{ "READY" };
 
 
 // Fonctions
@@ -84,20 +89,36 @@ int main(int argc, char* argv[])
     while (1)
     {
         cout << endl << argv[1] << "> ";
-        cin >> buffer;
+      
+        if (!ifReady)
+        {
+            cin >> buffer;
+            
+            // Envoi du buffer au serveur
+            if (send(s, buffer, strlen(buffer), 0) == -1) {
+                perror("Error while sending message to server ");
+            }
+
+            std::string str = buffer;
+            std::regex_search(str, m, getReady);
+
+            for (auto v : m)
+            {
+                if (v == "READY");
+                ifReady = true;
+            }
+        }
+        else
+        {
+            ifReady = false;
+        }
 
         if (strcmp(buffer, "EXIT") == 0)
             break;
 
-        // Envoi du buffer au serveur
-        if (send(s, buffer, strlen(buffer), 0) == -1) {
-            perror("Error while sending message to server ");
-        }
-
         // Lecture de la réponse du serveur
         if ((length = recv(s, buffer, MAXDATASIZE, 0)) == -1) {
             perror("Error while receiving message from server ");
-            continue;
         }
 
         // Suppression des retours chariots (\n et \r)
@@ -111,11 +132,11 @@ int main(int argc, char* argv[])
             cout << "Le serveur a ferme la connexion !" << endl;
             break;
         }
+        
         else {
             // Affichage du message
             cout << buffer << endl;
-            
-            
+             
         }
 
     }
