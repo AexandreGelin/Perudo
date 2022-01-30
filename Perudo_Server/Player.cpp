@@ -170,6 +170,7 @@ void Player::execute_thread()
 				{
 					send_message("ce n'est pas ton tour");
 				}
+
 				else
 				{
 					std::string str = buffer;
