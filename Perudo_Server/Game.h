@@ -12,6 +12,7 @@ private:
 	int nbDiceMisee;
 	int typeDyceMisee;
 	int idJoueurEnCours;
+	int leTour = 1;
 
 public:
 
@@ -31,6 +32,8 @@ public:
 	void StartGame();
 
 	void GetMise(int dice, int type, int idJoueur);
+
+	bool tour(int idJoueur);
 
 	//std::vector<int> GetAllPlayerId();
 	//std::vector<SOCKET> getAllSocket(); 

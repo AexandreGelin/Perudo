@@ -125,7 +125,7 @@ void Player::execute_thread()
 
 	// Boucle infinie pour le player
 	while (1) {
-
+		
 		// On attend un message du player
 		if ((length = recv_message()) == -1) {
 			break;
@@ -145,40 +145,55 @@ void Player::execute_thread()
 			Game game;
 			// Traitement du message reçu
 
-			if (strcmp(buffer, "READY") == 0) {
-				is_ready = true;
-
-				bool test = game.GetInstance()->allPlayerReady();
-				Output::GetInstance()->print(test);
-
-				if (test)
+			if (strcmp(buffer, "READY") == 0 ) {
+				
+				if (!is_ready)
 				{
-					game.StartGame();
+					is_ready = true;
+
+					playersAllReady = game.GetInstance()->allPlayerReady();
+					Output::GetInstance()->print(playersAllReady);
+
+					if (playersAllReady)
+					{
+						game.StartGame();
+					}
 				}
+
+				else send_message("Tu est deja pret");
 			}
+			
 			else if (result)
 			{
-				std::string str = buffer;
-				std::smatch m;
-				std::smatch m2;
-				std::regex_search(str, m, getNbDice);
-				std::regex_search(str, m2, getDice);
-
-				int nbDice = 0;
-				int Dice = 0;
-
-				for (auto v : m)
+				bool siTonTour = game.GetInstance()->tour(id);
+				if (!siTonTour)
 				{
-					nbDice = stoi(v);
+					send_message("ce n'est pas ton tour");
 				}
-
-				for (auto v : m2)
+				else
 				{
-					Dice = stoi(v);
-				}
+					std::string str = buffer;
+					std::smatch m;
+					std::smatch m2;
+					std::regex_search(str, m, getNbDice);
+					std::regex_search(str, m2, getDice);
 
-				game.GetInstance()->GetMise(nbDice, Dice, id);
-				send_message("Mise correcte , en attente du joueur suivant");
+					int nbDice = 0;
+					int Dice = 0;
+
+					for (auto v : m)
+					{
+						nbDice = stoi(v);
+					}
+
+					for (auto v : m2)
+					{
+						Dice = stoi(v);
+					}
+
+					game.GetInstance()->GetMise(nbDice, Dice, id);
+					send_message("Mise correcte , en attente du joueur suivant");
+				}	
 			}
 
 			else sprintf(buffer, "%s is not recognized as a valid command", buffer);

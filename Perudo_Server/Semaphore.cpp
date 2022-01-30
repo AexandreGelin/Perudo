@@ -2,6 +2,7 @@
 
 CSemaphore::CSemaphore(int c = 0) : count_(c)
 {
+
 }
 
 void CSemaphore::reset()

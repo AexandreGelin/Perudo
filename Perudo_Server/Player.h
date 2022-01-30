@@ -37,6 +37,7 @@ private:
 #endif
 	std::thread thread;
 	char* buffer;
+	bool playersAllReady = false;
 
 	bool send_message(const char*);
 	//bool send_messageToAllPlayers(std::vector<SOCKET> allPlayerSocket);
